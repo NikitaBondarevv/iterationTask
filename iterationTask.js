@@ -61,9 +61,9 @@ const date = {
             value: `${dates[index]} is ${dateNow[`get${dates[index++]}`]()}`,
             done: false
           };
-        } else {
-          return { done: true };
         }
+        
+        return { done: true };
       }
     };
   }
