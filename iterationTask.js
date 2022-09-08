@@ -5,12 +5,13 @@ const products = {
   2: 'Tv',
   [Symbol.iterator]: function () {
       let count = 0;
+      const productsLength = Object.keys(products).length;
       
       return {
           next() {
               return {
                   value: products[count++],
-                  done: count > Object.keys(products).length
+                  done: count > productsLength
               };
           }
       };
@@ -25,12 +26,14 @@ const obj = {
   name: 'John',
   [Symbol.iterator]: function () {
     let count = 0;
+    const objLength = Object.keys(obj).length;
+    const objSorted = Object.keys(obj).sort();
     
     return {
         next() {
             return {
-                value: obj[Object.keys(obj).sort()[count++]],
-                done: count > Object.keys(obj).length
+                value: obj[objSorted[count++]],
+                done: count > objLength
             };
         }
     };
@@ -53,10 +56,14 @@ const date = {
     ];
     return {
       next() {
-        return index < dates.length ? {
-          value: `${dates[index]} is ${dateNow[`get${dates[index++]}`]()}`,
-          done: false,
-        } : { done: true };
+        if (index < dates.length) {
+          return {
+            value: `${dates[index]} is ${dateNow[`get${dates[index++]}`]()}`,
+            done: false
+          }
+        } else {
+          return { done: true }
+        }
       }
     };
   }
